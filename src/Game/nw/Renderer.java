@@ -34,11 +34,10 @@ public class Renderer extends JPanel {
         g.drawImage(base.getImg(), base.getPoint().getX(), base.getPoint().getY(), base.getSize().getWidth(), base.getSize().getHeight(), null);
         frog.draw();
         g.drawImage(frog.getImage(), frog.getPoint().getX(), frog.getPoint().getY(), frog.getSize().getWidth(), frog.getSize().getHeight(), null);
-//        for (Pipe i : pipes) {
         for (int i = 0; i < pipes.size(); i++) {
             Pipe pipe = pipes.get(i);
-            g.drawImage(pipe.getImgTop(), pipe.getPoint().getX(), pipe.getPoint().getY() - 700 - 100, NEWPIPE.getWidth(), NEWPIPE.getHeight(), null);
-            g.drawImage(pipe.getImgBot(), pipe.getPoint().getX(), pipe.getPoint().getY() + 100, NEWPIPE.getWidth(), NEWPIPE.getHeight(), null);
+            g.drawImage(pipe.getImgTop(), pipe.getPoint().getX(), pipe.getPoint().getY() - 700 - chuanghiraten.BOXNULL, NEWPIPE.getWidth(), NEWPIPE.getHeight(), null);
+            g.drawImage(pipe.getImgBot(), pipe.getPoint().getX(), pipe.getPoint().getY() + chuanghiraten.BOXNULL, NEWPIPE.getWidth(), NEWPIPE.getHeight(), null);
             System.out.println(pipe.getPoint().getY() + " point y pipe");
             g.setColor(Color.red);
             g.fillRect(pipe.getPoint().getX(), pipe.getPoint().getY(), 10, 10);

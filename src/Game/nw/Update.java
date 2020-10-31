@@ -16,7 +16,6 @@ public class Update {
     public int count;
 
     private final static Size NEWPIPE = new Size(700, 150);
-    private final static int PIPEVELOCITY = 15;
 
     public Update(Frog frog, ArrayList<Pipe> pipes, BackGroud backGroud, Base base, CheckGame checkGame) {
         this.frog = frog;
@@ -31,17 +30,17 @@ public class Update {
         if (checkGame.isStarted() && !checkGame.isGameOver()) {
             for (int i = 0; i < pipes.size(); i++) {
                 Pipe pipe = pipes.get(i);
-                pipe.setPoint(new location(pipe.getPoint().getX() - PIPEVELOCITY, pipe.getPoint().getY()));
+                pipe.setPoint(new location(pipe.getPoint().getX() - chuanghiraten.PIPEVELOCITY, pipe.getPoint().getY()));
                 if (pipe.getPoint().getX() + pipe.getSize().getWidth() < 0) {
                     pipes.remove(pipe);
                     if (pipe.getPoint().getX() - pipe.getSize().getWidth() <= 0) {
-                        System.out.println("Ddd");
                         addColumn(false);
                     }
                 }
-                if (pipe.getPoint().getX() <= frog.getPoint().getY() && !pipe.isFinish())
+                if (pipe.getPoint().getX() <= frog.getPoint().getY() && !pipe.isFinish()) {
                     checkGame.count += 1;
-                pipe.setFinish(true);
+                    pipe.setFinish(true);
+                }
             }
             frog.move();
             if (checkGame.checkGameOver())
@@ -64,9 +63,7 @@ public class Update {
         if (started) {
             pipes.add(new Pipe(NEWPIPIPOINT, NEWPIPE));
         } else {
-//            pipes.add(new Pipe(NEWPIPIPOINT, NEWPIPE));
-            pipes.add(new Pipe(new location(900, 500), NEWPIPE));
-
+            pipes.add(new Pipe(NEWPIPIPOINT, NEWPIPE));
         }
     }
 

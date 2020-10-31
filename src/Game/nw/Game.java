@@ -35,7 +35,7 @@ public class Game implements ActionListener, KeyListener, MouseListener {
         this.render = new Renderer(frog, pipes, backGroud, base, checkGame);
 
         JFrame jframe = new JFrame();
-        Timer timer = new Timer(80, this);
+        Timer timer = new Timer(60, this);
         jframe.add(render);
         jframe.setTitle("Flappy Bird");
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

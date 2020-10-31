@@ -48,32 +48,19 @@ public class Pipe {
         }
 
     }
-
     public Size getSize() {
         return size;
-    }
-
-    public boolean draw(Graphics window) {
-
-        return window.drawImage(imgTop, size.getHeight(), size.getWidth(), null) &&
-                window.drawImage(imgBot, size.getHeight(), size.getWidth(), null);
     }
 
     public BufferedImage getImgTop() {
         return imgTop;
     }
 
-    public void setImgTop(BufferedImage imgTop) {
-        this.imgTop = imgTop;
-    }
 
     public BufferedImage getImgBot() {
         return imgBot;
     }
 
-    public void setImgBot(BufferedImage imgBot) {
-        this.imgBot = imgBot;
-    }
 
     public void setPoint(location point) {
         this.point = point;

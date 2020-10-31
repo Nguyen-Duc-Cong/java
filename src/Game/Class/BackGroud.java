@@ -29,8 +29,5 @@ public class BackGroud {
     public BufferedImage getImg() {
         return img;
     }
-    public void paint(Graphics g){
-        g.drawImage(img,0,0, 800,1000, null);
 
-    }
 }

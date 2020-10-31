@@ -26,23 +26,12 @@ public class Base {
         return point;
     }
 
-    public void setPoint(location point) {
-        this.point = point;
-    }
-
     public Size getSize() {
         return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
     }
 
     public BufferedImage getImg() {
         return img;
     }
 
-    public void setImg(BufferedImage img) {
-        this.img = img;
-    }
 }

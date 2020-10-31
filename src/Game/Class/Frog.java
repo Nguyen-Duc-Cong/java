@@ -17,10 +17,9 @@ public class Frog {
     private BufferedImage image;
     private final Color CRYSTAL_CLEAR = new Color(255, 255, 255, 0);
 
-    private static final int ANIMATION_TIME = 5;
     private int countImg = 0;
     private int tickCount = 0;
-    private int velosity = 0;
+    private double velosity = 0;
     private int yBeforeJump;
     private boolean jumping = false;
     private boolean faceR = true;
@@ -32,7 +31,7 @@ public class Frog {
                 "conllisionMask=" + conllisionMask +
                 ", point=" + point +
                 ", size=" + size +
-                ", image=" + (image !=null) +
+                ", image=" + (image != null) +
                 ", CRYSTAL_CLEAR=" + CRYSTAL_CLEAR +
                 ", countImg=" + countImg +
                 ", tickCount=" + tickCount +
@@ -58,7 +57,6 @@ public class Frog {
         } catch (IOException e) {
             System.out.println(e);
         }
-//        image = img[2];
     }
 
     public BufferedImage getImage() {
@@ -66,49 +64,42 @@ public class Frog {
     }
 
     public void draw() {
-        if (jumping){
+        if (jumping) {
             countImg++;
-            if (countImg < this.ANIMATION_TIME) {
+            if (countImg < chuanghiraten.ANIMATION_TIME) {
                 image = img1;
-            } else if (countImg < this.ANIMATION_TIME * 2) {
+            } else if (countImg < chuanghiraten.ANIMATION_TIME * 2) {
                 image = img2;
-            } else if (countImg < this.ANIMATION_TIME * 3) {
+            } else if (countImg < chuanghiraten.ANIMATION_TIME * 3) {
                 image = img3;
-            } else if (countImg == this.ANIMATION_TIME * 3+1){
-                jumping =false;
+            } else if (countImg == chuanghiraten.ANIMATION_TIME * 3 + 1) {
+                jumping = false;
                 countImg = 0;
                 image = img2;
             }
-        }else {
+        } else {
             image = img2;
         }
-        System.out.println("countImg"+countImg);
-
+        System.out.println("countImg" + countImg);
     }
 
     public void move() {
         tickCount++;
-        int displacement = (int) (velosity*tickCount + 1.5*3*tickCount*tickCount);
+        int displacement = (int) (velosity * tickCount + 1.5 * tickCount * tickCount);
         if (displacement >= 30)
-        displacement = (displacement/Math.abs(displacement)) * 30;
+            displacement = (displacement / Math.abs(displacement)) * 30;
         if (displacement < 0) {
-            displacement -= 30;
-//            tickCount =0;
+            displacement -= 0;
         }
         point.setY((point.getY() + displacement));
-//        System.out.println("displacement: "+displacement+" tickCount: "+tickCount);
-
-
+        System.out.println("displacement: "+displacement+" tickCount: "+tickCount);
     }
-
 
     public void jump() {
         tickCount = 0;
-        velosity = -30;
+        velosity = -15;
         yBeforeJump = this.point.getY();
         jumping = true;
-
-
     }
 
     public Size getSize() {
@@ -117,10 +108,6 @@ public class Frog {
 
     public location getPoint() {
         return point;
-    }
-
-    public void setPoint(location point) {
-        this.point = point;
     }
 
 //    private BufferedImage rotateCounterClockwise90(BufferedImage image) {

@@ -2,6 +2,7 @@ package Game.nw;
 
 import Game.Class.Frog;
 import Game.Class.Pipe;
+import Game.Class.chuanghiraten;
 
 import java.util.ArrayList;
 
@@ -38,10 +39,10 @@ public class CheckGame {
 
             if (frog.getPoint().getX() + frog.getSize().getWidth() >= pipe.getPoint().getX() &&
 //                    frog.getPoint().getX() + frog.getSize().getWidth() <= pipe.getPoint().getX() + pipe.getSize().getWidth())
-                    frog.getPoint().getX() + frog.getSize().getWidth() <= pipe.getPoint().getX() + 100) {
+                    frog.getPoint().getX() + frog.getSize().getWidth() <= pipe.getPoint().getX() + chuanghiraten.BOXNULL) {
                 System.out.println("check game  in pipe X" + pipe.toString());
-                if (frog.getPoint().getY() < (pipe.getPoint().getY() - 100) ||
-                        frog.getPoint().getY() + frog.getSize().getHeight() > (pipe.getPoint().getY() + 100)) {
+                if (frog.getPoint().getY() < (pipe.getPoint().getY() - chuanghiraten.BOXNULL) ||
+                        frog.getPoint().getY() + frog.getSize().getHeight() > (pipe.getPoint().getY() + chuanghiraten.BOXNULL)) {
                     System.out.println("check game  in pipe y" + pipe.toString());
                     gameOver = true;
                     return true;

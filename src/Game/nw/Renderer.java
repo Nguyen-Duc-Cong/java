@@ -4,114 +4,64 @@ import Game.Class.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
-public abstract class Renderer implements ActionListener, KeyListener, MouseListener {
+public class Renderer extends JPanel {
 
-    private final Size size = new Size(1000, 800);
-    private final static int GRAVITATION = 15;
-    private final static int PIPEVELOCITY = 15;
-    private boolean gameOver = false;
 
-    private Graphics Render;
-    private BackGroud backGroud;
+    private static final long serialVersionUID = 1L;
+    private final static Size NEWPIPE = new Size(700, 150);
+
+//    public static Render render;
+
     private Frog frog;
-    private Base base;
     private ArrayList<Pipe> pipes;
+    private BackGroud backGroud;
+    private Base base;
+    private CheckGame checkGame;
 
-    public Renderer() {
-        JFrame jFrame = new JFrame();
-        jFrame.addMouseListener(this);
-        jFrame.addKeyListener(this);
+    public Renderer(Frog frog, ArrayList<Pipe> pipes, BackGroud backGroud, Base base, CheckGame checkGame) {
+        this.frog = frog;
+        this.pipes = pipes;
+        this.backGroud = backGroud;
+        this.base = base;
+        this.checkGame = checkGame;
     }
 
-    public void setupGame() {
-        BackGroud backGroud = new BackGroud(size);
-        Frog frog = new Frog();
-        Base base = new Base();
-        ArrayList<Pipe> pipes = new ArrayList<>();
-        gameOver = false;
+    public void repaint(Graphics g) {
 
-    }
-
-    public void reset() {
-        pipes.clear();
-    }
-
-    public void paint(Graphics g) {
-        g.drawImage(backGroud.getImg(), 0, 0, null);
-        g.drawImage(frog.getImage(), frog.getSize().getHeight(), frog.getSize().getWidth(), null);
-        for (Pipe pipe : pipes) {
-            pipe.draw(g);
-
+        g.drawImage(backGroud.getImg(), 0, 0, backGroud.getSize().getWidth(), backGroud.getSize().getHeight(), null);
+        g.drawImage(base.getImg(), base.getPoint().getX(), base.getPoint().getY(), base.getSize().getWidth(), base.getSize().getHeight(), null);
+        frog.draw();
+        g.drawImage(frog.getImage(), frog.getPoint().getX(), frog.getPoint().getY(), frog.getSize().getWidth(), frog.getSize().getHeight(), null);
+//        for (Pipe i : pipes) {
+        for (int i = 0; i < pipes.size(); i++) {
+            Pipe pipe = pipes.get(i);
+            g.drawImage(pipe.getImgTop(), pipe.getPoint().getX(), pipe.getPoint().getY() - 700 - 100, NEWPIPE.getWidth(), NEWPIPE.getHeight(), null);
+            g.drawImage(pipe.getImgBot(), pipe.getPoint().getX(), pipe.getPoint().getY() + 100, NEWPIPE.getWidth(), NEWPIPE.getHeight(), null);
+            System.out.println(pipe.getPoint().getY() + " point y pipe");
+            g.setColor(Color.red);
+            g.fillRect(pipe.getPoint().getX(), pipe.getPoint().getY(), 10, 10);
         }
-    }
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial", 1, 100));
+        if (!checkGame.isStarted()) {
+            g.drawString("Click to start!", 75, backGroud.getSize().getHeight() / 2 - 50);
+        }
 
-    public void update() {
-        checkGameRunning();
-        if (!gameOver) {
-            frog.setPoint(new Point(frog.getPoint().x, frog.getPoint().y + GRAVITATION));
-            for (Pipe pipe : pipes) {
-                pipe.setPoint(new Point(frog.getPoint().x - PIPEVELOCITY, frog.getPoint().y));
-                if (pipe.getPoint().x < 0)
-                    pipes.remove(pipe);
-            }
-        } else {
-            reset();
+        if (checkGame.isGameOver()) {
+            g.drawString("Game Over!", 100, backGroud.getSize().getHeight() / 2 - 50);
         }
-    }
 
-    public void checkGameRunning() {
-        if (frog.getPoint().y < 0) {
-            gameOver = true;
-            return;
-        }
-        if (frog.getPoint().y > size.getHeight()) {
-            gameOver = true;
-            return;
-        }
-//            for (Pipe pipe : pipes) {
-//                if (frog.getPoint().x + frog.getSize().getWidth() + bouncingRectSpeedX > pipe.getPoint().x &&
-//                        frog.getPoint().x + bouncingRectSpeedX < pipe.getPoint().x + pipe.getSize().getWidth() &&
-//                        frog.getPoint().y + frog.getSize().getHeight() > pipe.getPoint().y &&
-//                        frog.getPoint().y < pipe.getPoint().y+ pipe.getSize().getHeight()) {
-//                    bouncingRectSpeedX *= -1;
-//                }
-//                if (frog.getPoint().x + frog.getSize().getWidth() > pipe.getPoint().x &&
-//                        frog.getPoint().x < pipe.getPoint().x + pipe.getSize().getWidth() &&
-//                        frog.getPoint().y + frog.getSize().getHeight() + bouncingRectSpeedY > pipe.getPoint().y &&
-//                        frog.getPoint().y + bouncingRectSpeedY < pipe.getPoint().y + pipe.getSize().getHeight()) {
-//
-//                    bouncingRectSpeedY *= -1;
-//                }
-        for (Pipe pipe : pipes) {
-            if (frog.getPoint().x + frog.getSize().getWidth() > pipe.getPoint().x &&
-                    frog.getPoint().x < pipe.getPoint().x + pipe.getSize().getWidth() &&
-                    frog.getPoint().y + frog.getSize().getHeight() > pipe.getPoint().y &&
-                    frog.getPoint().y < pipe.getPoint().y + pipe.getSize().getHeight()) {
-                gameOver = true;
-                return;
-            }
-        }
-        gameOver = false;
-        return;
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (!gameOver) {
-                frog.jump();
-            }
+        if (checkGame.isStarted() && !checkGame.isGameOver()) {
+            g.drawString(String.valueOf(checkGame.count), backGroud.getSize().getWidth() / 2 - 25, 100);
         }
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        if (!gameOver) {
-            frog.jump();
-        }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        this.repaint(g);
     }
 
 }

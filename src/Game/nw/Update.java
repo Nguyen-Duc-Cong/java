@@ -55,7 +55,7 @@ public class Update {
         pipes.clear();
         frog.getPoint().setY(400);
         frog.getPoint().setX(400);
-        count = 0;
+        checkGame.count = 0;
         pipes.add(new Pipe(NEWPIPIPOINT, NEWPIPE));
     }
 
